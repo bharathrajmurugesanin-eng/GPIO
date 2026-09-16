@@ -40,18 +40,24 @@ To analyze the operation of the **GPIO Toggle-Pin API** by developing an Embedde
 ## Program
 ```
 #include "sdk_project_config.h"
-void delay(volatile int a){
-	while(a--);
+void delay(volatile int cycles)
+{
+    while(cycles--);
 }
-int a=10;
-int main(void){
-	CLOCK_DRV_Init(&clockMan1_InitConfig0);
-	PINS_DRV_Init(NUM_OF_CONFIGURED_PINS0,g_pin_mux_InitConfigArr0);
-	while(a--){
-		PINS_DRV_TogglePins(PTD,1<<0);
-		delay(7200000);
-	}
+
+int main(void)
+{
+   CLOCK_DRV_Init(&clockMan1_InitConfig0);
+   PINS_DRV_Init(NUM_OF_CONFIGURED_PINS0, g_pin_mux_InitConfigArr0);
+   PINS_DRV_SetPins(PTD, 1 << 15);
+  for (;;)
+  {
+      delay(720000);
+      PINS_DRV_TogglePins(PTD, 1 << 15);
+
+  }
 }
+
 
 ```
 ## OUTPUT
